@@ -1,0 +1,53 @@
+dependencies:
+  pre:
+    - mkdir ~/shipit
+    - touch ~/shipit/dependencies_pre
+
+dependencies:
+  post:
+    - touch ~/shipit/dependencies_post
+
+deploy:
+  pre:
+    - touch ~/shipit/deploy_pre
+
+deploy:
+  override:
+    - touch ~/shipit/deploy
+    - echo "`printenv`" > ~/shipit/deploy_variables
+
+deploy:
+  post:
+    - touch ~/shipit/deploy_post
+
+deploy:
+  variables:
+    - name: MY_DEPLOY_VAR
+      title: Title of MY_DEPLOY_VAR
+      default: 77
+
+deploy:
+  variables:
+    - name: MY_VAR_WITH_SELECT
+      title: Title of MY_VAR_WITH_SELECT
+      select:
+        - east
+        - west
+        - north
+        - south
+
+rollback:
+  override:
+    - touch ~/shipit/rollback
+
+rollback:
+  pre:
+    - touch ~/shipit/rollback_pre
+
+rollback:
+  post:
+    - touch ~/shipit/rollback_post
+
+machine:
+  environment:
+    MACHINE_ENV_VAR: "my value" # things added as environment variables
